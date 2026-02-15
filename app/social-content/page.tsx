@@ -9,69 +9,83 @@ export default function UrduCardPage() {
   const [cardText, setCardText] = useState("")
   const [cardStyle, setCardStyle] = useState("floral")
   const [textColor, setTextColor] = useState("#1F2937")
+  const [isDownloading, setIsDownloading] = useState(false)
 
-  const cardRef = useRef(null)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   const handleUpdate = () => {
     setCardText(input)
   }
 
   const handleDownload = async () => {
-    if (!cardRef.current) {
-      alert("Card not ready")
-      return
-    }
+  if (!cardRef.current) return alert("Card not ready")
 
-    try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 3, // HD quality
-        useCORS: true,
-        backgroundColor: null,
-      })
+  setIsDownloading(true)
 
-      const image = canvas.toDataURL("image/png")
-
-      const link = document.createElement("a")
-      link.href = image
-      link.download = "urdu-card.png"
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    } catch (err) {
-      console.error("Download error:", err)
-      alert("Download failed")
-    }
+  // Temporarily replace gradient text with solid color
+  const footerText = cardRef.current.querySelector("p") // adjust selector if needed
+  const originalColor = footerText?.style.background
+  if (footerText) {
+    footerText.style.background = "none"
+    footerText.style.color = "#a855f7" // fallback solid color
+    footerText.style.WebkitBackgroundClip = "unset"
+    footerText.style.WebkitTextFillColor = "unset"
   }
 
- const cardBackgrounds = {
-  floral: "linear-gradient(135deg, #FEF3C7, #FFEDD5)",
-  elegant: "linear-gradient(135deg, #F8FAFC, #E5E7EB)",
-  vibrant: "linear-gradient(135deg, #FCE7F3, #E9D5FF)",
-  nature: "linear-gradient(135deg, #DCFCE7, #D1FAE5)",
-  ocean: "linear-gradient(135deg, #DBEAFE, #CFFAFE)",
+  try {
+    const canvas = await html2canvas(cardRef.current, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: null,
+      logging: false,
+      allowTaint: true,
+      scrollY: -window.scrollY,
+    })
+
+    const image = canvas.toDataURL("image/png", 1.0)
+    const link = document.createElement("a")
+    link.href = image
+    link.download = "urdu-card.png"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (err) {
+    console.error(err)
+    alert("Download failed")
+  } finally {
+    // Restore gradient
+    if (footerText && originalColor) footerText.style.background = originalColor
+    setIsDownloading(false)
+  }
 }
 
-  const cardPatterns = {
-    floral: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%23f59e0b\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z\"/%3E%3C/g%3E%3C/svg%3E')",
-    elegant: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M0 40L40 0H20L0 20M40 40V20L20 40\"/%3E%3C/g%3E%3C/svg%3E')",
-    vibrant: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%23ec4899\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z\"/%3E%3C/g%3E%3C/svg%3E')",
-    nature: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%2310b981\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z\"/%3E%3C/g%3E%3C/svg%3E')",
-    ocean: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%2306b6d4\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z\"/%3E%3C/g%3E%3C/svg%3E')"
+  const cardBackgrounds = {
+    floral: "#fef3c7",
+    elegant: "#f8fafc",
+    vibrant: "#fce7f3",
+    nature: "#dcfce7",
+    ocean: "#dbeafe",
+  }
+
+  const cardGradients = {
+    floral: "linear-gradient(135deg, #fef3c7, #ffedd5)",
+    elegant: "linear-gradient(135deg, #f8fafc, #e5e7eb)",
+    vibrant: "linear-gradient(135deg, #fce7f3, #e9d5ff)",
+    nature: "linear-gradient(135deg, #dcfce7, #d1fae5)",
+    ocean: "linear-gradient(135deg, #dbeafe, #cffafe)",
   }
 
   return (
     <div
       className="min-h-screen p-4 md:p-8 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #E0E7FF, #F3E8FF, #FCE7F3)",
-      }}
+      style={{ background: "linear-gradient(135deg, #e0e7ff, #f3e8ff, #fce7f3)" }}
     >
       {/* Background decorative elements */}
-      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-gradient-to-br from-purple-300 to-pink-300 opacity-20 blur-3xl"></div>
-      <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-gradient-to-br from-blue-300 to-cyan-300 opacity-20 blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-gradient-to-br from-yellow-200 to-orange-200 opacity-15 blur-3xl"></div>
+      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-purple-300 opacity-20 blur-3xl"></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-blue-300 opacity-20 blur-3xl"></div>
 
       <div className="relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,13 +99,14 @@ export default function UrduCardPage() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* LEFT SIDE */}
+          {/* LEFT SIDE: Controls */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/50"
+            className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-white/50"
           >
+            {/* Text Input */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-purple-600"></span>
@@ -106,6 +121,7 @@ export default function UrduCardPage() {
               />
             </div>
 
+            {/* Card Style */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-pink-600"></span>
@@ -128,6 +144,7 @@ export default function UrduCardPage() {
               </div>
             </div>
 
+            {/* Text Color */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-indigo-600"></span>
@@ -149,6 +166,7 @@ export default function UrduCardPage() {
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex gap-4">
               <button
                 onClick={handleUpdate}
@@ -159,19 +177,24 @@ export default function UrduCardPage() {
 
               <button
                 onClick={handleDownload}
-                className="flex-1 py-3 px-4 bg-gradient-to-r from-green-600 to-teal-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                disabled={isDownloading}
+                className={`flex-1 py-3 px-4 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                  isDownloading
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-600 to-teal-600 text-white hover:from-green-700 hover:to-teal-700"
+                }`}
               >
-                Download Card
+                {isDownloading ? "Downloading..." : "Download Card"}
               </button>
             </div>
           </motion.div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT SIDE: Card Preview */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/50 flex justify-center items-center"
+            className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-white/50 flex justify-center items-center"
           >
             {cardText ? (
               <motion.div
@@ -179,42 +202,46 @@ export default function UrduCardPage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                className="w-80 h-80 rounded-3xl shadow-2xl p-8 flex items-center justify-center text-center relative overflow-hidden"
-                style={{
-                  background: cardBackgrounds[cardStyle],
-                  backgroundImage: cardPatterns[cardStyle],
-                  backgroundSize: 'cover'
-                }}
+                className="w-[560px] h-[400px] rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
+                style={{ background: cardGradients[cardStyle] }}
                 dir="rtl"
               >
-                {/* Decorative corners */}
-                <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-gray-300 opacity-50"></div>
-                <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-gray-300 opacity-50"></div>
-                <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-gray-300 opacity-50"></div>
-                <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-gray-300 opacity-50"></div>
-
-                {/* Decorative circles */}
-                <div className="absolute top-6 left-6 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 opacity-20 blur-xl"></div>
-                <div className="absolute bottom-6 right-6 w-20 h-20 rounded-full bg-gradient-to-br from-purple-300 to-pink-400 opacity-20 blur-xl"></div>
-                <div className="absolute top-1/2 right-8 w-12 h-12 rounded-full bg-gradient-to-br from-blue-300 to-cyan-400 opacity-15 blur-xl"></div>
-
+                {/* Urdu Text */}
                 <p
-                  className="text-2xl font-bold leading-relaxed relative z-10"
+                  className="text-2xl font-bold leading-relaxed relative z-10 mb-8"
                   style={{
                     color: textColor,
                     fontFamily: "'Noto Nastaliq Urdu', serif",
-                    textShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                    textShadow: "0px 1px 2px rgba(0,0,0,0.1)",
                   }}
                 >
                   {cardText}
                 </p>
 
-                {/* Decorative line */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent opacity-50"></div>
+                {/* Stylish footer with decorative borders */}
+                <div className="relative z-10 w-full mt-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="flex-1 h-[1px] bg-gradient-to-r from-purple-400 to-pink-400 opacity-50"></div>
+                    <p
+                      className="relative z-10 text-gray-700 text-sm font-semibold tracking-wider uppercase px-2"
+                      style={{
+                        fontFamily: "'Poppins', sans-serif",
+                        background: "linear-gradient(90deg, #a855f7, #ec4899)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      Silient Words
+                    </p>
+                    <div className="flex-1 h-[1px] bg-gradient-to-l from-purple-400 to-pink-400 opacity-50"></div>
+                  </div>
+                </div>
               </motion.div>
             ) : (
               <div className="w-80 h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center border-2 border-dashed border-gray-300">
-                <p className="text-gray-400 text-center font-medium">Your card preview will appear here</p>
+                <p className="text-gray-400 text-center font-medium">
+                  Your card preview will appear here
+                </p>
               </div>
             )}
           </motion.div>
