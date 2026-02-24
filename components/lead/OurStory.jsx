@@ -139,19 +139,11 @@ const OurStory = () => {
         </button>
       </div>
       {/* Diary section is here  */}
-<div className="hidden md:flex">
+<div className="hidden md:flex md:flex-col">
 
 
   
-      <div className="hidden md:flex items-center relative top-[-380px] left-[-5px]">
-        {/* left side  */}
-        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-
-        {/* center div  */}
-        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
-        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-      </div>
-      <div className="flex items-center relative top-[-370] left-[-5]">
+      <div className="hidden md:flex items-center relative bottom-[415px] left-[-5px]">
         {/* left side  */}
         <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
 
@@ -160,7 +152,7 @@ const OurStory = () => {
         <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
       </div>
 
-      <div className="flex items-center relative top-[-360] left-[-5]">
+        <div className="hidden md:flex items-center relative bottom-[405px] left-[-5px]">
         {/* left side  */}
         <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
 
@@ -169,7 +161,7 @@ const OurStory = () => {
         <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
       </div>
 
-      <div className="flex items-center relative top-[-350] left-[-5]">
+        <div className="hidden md:flex items-center relative bottom-[395px] left-[-5px]">
         {/* left side  */}
         <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
 
@@ -178,7 +170,42 @@ const OurStory = () => {
         <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
       </div>
 
-      <div className="flex items-center relative top-[-340] left-[-5]">
+        <div className="hidden md:flex items-center relative bottom-[385px] left-[-5px]">
+        {/* left side  */}
+        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+
+        {/* center div  */}
+        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
+        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+      </div>
+   
+  <div className="hidden md:flex items-center relative bottom-[375px] left-[-5px]">
+        {/* left side  */}
+        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+
+        {/* center div  */}
+        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
+        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+      </div>
+      
+
+       <div className="hidden md:flex items-center relative bottom-[365px] left-[-5px]">
+        {/* left side  */}
+        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+
+        {/* center div  */}
+        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
+        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+      </div>
+        <div className="hidden md:flex items-center relative bottom-[355px] left-[-5px]">
+        {/* left side  */}
+        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+
+        {/* center div  */}
+        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
+        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
+      </div>
+        <div className="hidden md:flex items-center relative bottom-[345px] left-[-5px]">
         {/* left side  */}
         <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
 
@@ -187,30 +214,7 @@ const OurStory = () => {
         <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
       </div>
 
-      <div className="flex items-center relative top-[-330] left-[-5]">
-        {/* left side  */}
-        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-
-        {/* center div  */}
-        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
-        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-      </div>
-      <div className="flex items-center relative top-[-320] left-[-5]">
-        {/* left side  */}
-        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-
-        {/* center div  */}
-        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
-        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-      </div>
-      <div className="flex items-center relative top-[-310] left-[-5]">
-        {/* left side  */}
-        <div className="w-4 h-6 border border-4 relative top-0 left-3 rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-
-        {/* center div  */}
-        <div className="w-[45px] h-3 bg-gray-200  rounded-md"></div>
-        <div className="w-4 h-6 border border-4 relative top-0 left-[-4] rounded-[30px] border-gray-200 bg-gray-200 border-0.5 "></div>
-      </div>
+      
 </div>
     </section>
   );
